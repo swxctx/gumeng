@@ -24,6 +24,11 @@ type (
 			]
 		}
 	*/
+
+	NewUserDataResult struct {
+		newAccountInfo []*NewUserData `json:"new_account_info"`
+	}
+
 	// 新增数据
 	NewUserData struct {
 		// 日期
@@ -40,7 +45,7 @@ type (
 )
 
 // GetNewUserData 获取新增数据
-func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUserData, error) {
+func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUserDataResult, error) {
 	// 1. 处理参数
 	params := url.Values{}
 	params.Add("startDate", startDate)
@@ -54,7 +59,7 @@ func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUser
 	}
 
 	var (
-		newUserData *NewUserData
+		newUserData *NewUserDataResult
 	)
 	if err := json.Unmarshal(resp, &newUserData); err != nil {
 		return nil, err
@@ -79,19 +84,23 @@ type (
 			]
 		}
 	*/
-	// 新增数据
+
+	ActiveUserDataResult struct {
+		activeAccountInfo []*ActiveUserData `json:"active_account_info"`
+	}
+	// 活跃数据
 	ActiveUserData struct {
 		// 日期
 		date string `json:"data"`
-		// 新增用户
+		// 活跃用户
 		activeUser int64 `json:"activeUser"`
-		// 新增账号
+		// 活跃账号
 		activeAccount int64 `json:"activeAccount"`
 	}
 )
 
-// GetNewUserData 获取新增数据
-func (uapp *Uapp) GetActiveUserData(eventName, startDate, endDate string) (*ActiveUserData, error) {
+// GetNewUserData 获取活跃数据
+func (uapp *Uapp) GetActiveUserData(eventName, startDate, endDate string) (*ActiveUserDataResult, error) {
 	// 1. 处理参数
 	params := url.Values{}
 	params.Add("startDate", startDate)
@@ -105,7 +114,7 @@ func (uapp *Uapp) GetActiveUserData(eventName, startDate, endDate string) (*Acti
 	}
 
 	var (
-		activeUserData *ActiveUserData
+		activeUserData *ActiveUserDataResult
 	)
 	if err := json.Unmarshal(resp, &activeUserData); err != nil {
 		return nil, err
