@@ -7,7 +7,8 @@ import (
 
 const (
 	// 获取事件独立用户数
-	eventGetUniqueUsersApi = "openapi/param2/1/com.umeng.uapp/umeng.uapp.event.getUniqueUsers"
+	eventGetUniqueUsersApi  = "openapi/param2/1/com.umeng.uapp/umeng.uapp.event.getUniqueUsers"
+	eventGetUniqueUsersPath = "param2/1/com.umeng.uapp/umeng.uapp.event.getUniqueUsers"
 )
 
 type (
@@ -23,13 +24,13 @@ type (
 	*/
 	// 事件独立用户数
 	EventKeyUV struct {
-		EventUniqueUsers []EventUniqueUser `json:"uniqueUsers"`
+		EventUniqueUsers []*EventUniqueUser `json:"uniqueUsers"`
 	}
 	EventUniqueUser struct {
-		// 数据
-		Dates string `json:"dates"`
-		// 日期
-		Data string `json:"data"`
+		// 日期数组
+		Dates []string `json:"dates"`
+		// 数据数组
+		Data []int64 `json:"data"`
 	}
 )
 
@@ -42,7 +43,7 @@ func (uapp *Uapp) GetEventKeyUV(eventName, startDate, endDate string) (*EventKey
 	params.Add("eventName", eventName)
 
 	// 2. 发起请求
-	resp, err := uapp.doGetRequest(eventGetUniqueUsersApi, params)
+	resp, err := uapp.doGetRequest(eventGetUniqueUsersApi, eventGetUniqueUsersPath, params)
 	if err != nil {
 		return nil, err
 	}

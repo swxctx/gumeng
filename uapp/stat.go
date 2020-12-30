@@ -7,7 +7,8 @@ import (
 
 const (
 	// 获取新增数据
-	getNewDataApi = "openapi/param2/1/com.umeng.uapp/umeng.uapp.getNewAccounts"
+	getNewDataApi  = "openapi/param2/1/com.umeng.uapp/umeng.uapp.getNewAccounts"
+	getNewDataPath = "param2/1/com.umeng.uapp/umeng.uapp.getNewAccounts"
 )
 
 type (
@@ -26,26 +27,26 @@ type (
 	*/
 
 	NewUserDataResult struct {
-		newAccountInfo []*NewUserData `json:"new_account_info"`
+		NewAccountInfo []*NewUserData `json:"newAccountInfo"`
 	}
 
 	// 新增数据
 	NewUserData struct {
 		// 日期
-		date string `json:"data"`
+		Date string `json:"date"`
 		// 新增用户
-		newUser int64 `json:"new_user"`
+		NewUser int64 `json:"newUser"`
 		// 新增账号
-		newAccount int64 `json:"new_account"`
+		NewAccount int64 `json:"newAccount"`
 		// 小时新增用户（按小时查询时）
-		hourNewUser []int64 `json:"hour_new_user"`
+		HourNewUser []int64 `json:"hourNewUser"`
 		// 小时新增账号（按小时查询时）
-		hourNewAccount []int64 `json:"hour_new_account"`
+		HourNewAccount []int64 `json:"hourNewAccount"`
 	}
 )
 
 // GetNewUserData 获取新增数据
-func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUserDataResult, error) {
+func (uapp *Uapp) GetNewUserData(startDate, endDate string) (*NewUserDataResult, error) {
 	// 1. 处理参数
 	params := url.Values{}
 	params.Add("startDate", startDate)
@@ -53,7 +54,7 @@ func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUser
 	params.Add("periodType", "daily")
 
 	// 2. 发起请求
-	resp, err := uapp.doGetRequest(getNewDataApi, params)
+	resp, err := uapp.doGetRequest(getNewDataApi, getNewDataPath, params)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,8 @@ func (uapp *Uapp) GetNewUserData(eventName, startDate, endDate string) (*NewUser
 
 const (
 	// 获取活跃数据
-	getActiveUserDataApi = "openapi/param2/1/com.umeng.uapp/umeng.uapp.getActiveAccounts"
+	getActiveUserDataApi  = "openapi/param2/1/com.umeng.uapp/umeng.uapp.getActiveAccounts"
+	getActiveUserDataPath = "param2/1/com.umeng.uapp/umeng.uapp.getActiveAccounts"
 )
 
 type (
@@ -86,21 +88,21 @@ type (
 	*/
 
 	ActiveUserDataResult struct {
-		activeAccountInfo []*ActiveUserData `json:"active_account_info"`
+		ActiveAccountInfo []*ActiveUserData `json:"activeAccountInfo"`
 	}
 	// 活跃数据
 	ActiveUserData struct {
 		// 日期
-		date string `json:"data"`
+		Date string `json:"date"`
 		// 活跃用户
-		activeUser int64 `json:"activeUser"`
+		ActiveUser int64 `json:"activeUser"`
 		// 活跃账号
-		activeAccount int64 `json:"activeAccount"`
+		ActiveAccount int64 `json:"activeAccount"`
 	}
 )
 
 // GetNewUserData 获取活跃数据
-func (uapp *Uapp) GetActiveUserData(eventName, startDate, endDate string) (*ActiveUserDataResult, error) {
+func (uapp *Uapp) GetActiveUserData(startDate, endDate string) (*ActiveUserDataResult, error) {
 	// 1. 处理参数
 	params := url.Values{}
 	params.Add("startDate", startDate)
@@ -108,7 +110,7 @@ func (uapp *Uapp) GetActiveUserData(eventName, startDate, endDate string) (*Acti
 	params.Add("periodType", "daily")
 
 	// 2. 发起请求
-	resp, err := uapp.doGetRequest(eventGetUniqueUsersApi, params)
+	resp, err := uapp.doGetRequest(getActiveUserDataApi, getActiveUserDataPath, params)
 	if err != nil {
 		return nil, err
 	}

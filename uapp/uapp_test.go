@@ -7,15 +7,27 @@ import (
 // TestEventKeyUV
 func TestEventKeyUV(t *testing.T) {
 	uapp := &Uapp{
-		ApiKey:      "2558925",
-		ApiSecurity: "Pn0Zf6vR2wmK",
+		ApiKey:      "",
+		ApiSecurity: "",
 		GateWay:     "https://gateway.open.umeng.com",
 		AppKey:      "",
 		Debug:       true,
 	}
-	eventUV, err := uapp.GetEventKeyUV("com.swxctx.com", "2020-12-14", "2020-12-15")
+	newData, err := uapp.GetNewUserData("2020-12-28", "2020-12-28")
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("resp-> %v", eventUV)
+	t.Logf("resp new-> %#v", newData)
+
+	activeData, err := uapp.GetActiveUserData("2020-12-28", "2020-12-28")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("resp active-> %#v", activeData)
+
+	eventData, err := uapp.GetEventKeyUV("com.xiaoenai.home", "2020-12-28", "2020-12-28")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("resp event-> %#v", eventData)
 }
