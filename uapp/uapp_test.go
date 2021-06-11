@@ -25,7 +25,7 @@ func TestEventKeyUV(t *testing.T) {
 	}
 	t.Logf("resp active-> %#v", activeData)
 
-	eventData, err := uapp.GetEventKeyUV("com.xiaoenai.home", "2020-12-28", "2020-12-28")
+	eventData, err := uapp.GetEventKeyUV("com.app.home", "2020-12-28", "2020-12-28")
 	if err != nil {
 		t.Fatal(err)
 	}
